@@ -1,4 +1,5 @@
 # Rails-Practice
+
 <table>    
   <tr>
     <th colspan = "2">User</th>
