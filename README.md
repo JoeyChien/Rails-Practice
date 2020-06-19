@@ -1,4 +1,3 @@
-
 # Rails-Practice
 <table>    
   <tr>
@@ -62,7 +61,7 @@
     <td>name</td>
     <td>string</td>
   </tr>
-</table>
+</table> 
 <table>    
   <tr>
     <th colspan = "2">TagTask</th>
