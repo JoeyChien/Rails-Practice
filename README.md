@@ -54,11 +54,24 @@
     <th colspan = "2">Tag</th>
   </tr>
    <tr>
-    <td>task_id (fk)</td>
+    <td>user_id (fk)</td>
     <td>integer</td>
   </tr>
    <tr>
     <td>name</td>
     <td>string</td>
+  </tr>
+</table> 
+<table>    
+  <tr>
+    <th colspan = "2">TagTask</th>
+  </tr>
+   <tr>
+    <td>task_id (fk)</td>
+    <td>integer</td>
+  </tr>
+   <tr>
+    <td>tag_id (fk)</td>
+    <td>integer</td>
   </tr>
 </table> 
