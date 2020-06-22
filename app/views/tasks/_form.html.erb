@@ -1,0 +1,7 @@
+<%= form_for(task) do |f| %>
+  <%= f.label :title, "任務名稱" %>
+  <%= f.text_field :title %>
+  <%= f.label :content, "任務內容" %>
+  <%= f.text_field :content %>
+  <%= f.submit %>
+<% end %>
