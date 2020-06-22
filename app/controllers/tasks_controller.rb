@@ -1,5 +1,8 @@
 class TasksController < ApplicationController
+  before_action :find_task, only: [:edit, :update, :destroy]
+
   def index
+    # 之後加上分頁功能
     @tasks = Task.all
   end
 
@@ -17,12 +20,9 @@ class TasksController < ApplicationController
   end
 
   def edit
-    @task = Task.find_by(id: params[:id])
   end
 
   def update
-    @task = Task.find_by(id: params[:id])
-
     if @task.update(task_params)
       redirect_to tasks_path, notice: "修改成功"
     else
@@ -31,8 +31,6 @@ class TasksController < ApplicationController
   end
 
   def destroy
-    @task = Task.find_by(id: params[:id])
-
     if @task.destroy
       redirect_to tasks_path, notice: "刪除成功"
     else
@@ -43,5 +41,8 @@ class TasksController < ApplicationController
   private
   def task_params
     params.require(:task).permit(:title, :content)
+  end
+  def find_task
+    @task = Task.find_by(id: params[:id])
   end
 end
