@@ -7,5 +7,5 @@ services:
 before_script:
   - bundle exec rails db:migrate:reset RAILS_ENV=test
 script:
-  - bundle exec rails webpacker:compile
+  - bundle exec rails webpacker:compile RAILS_ENV=test
   - bundle exec rails spec
