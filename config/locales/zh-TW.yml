@@ -4,6 +4,10 @@ zh-TW:
       create: "新增%{model}"
       submit: "儲存%{model}"
       update: "修改%{model}"
+      task:
+        create: "新增任務"
+        submit: "儲存任務"
+        update: "修改任務"
   activerecord:
     attributes:    
       task: 
