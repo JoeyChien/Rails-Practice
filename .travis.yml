@@ -1,10 +1,31 @@
 language: ruby
+
 rvm:
  - 2.6.5
-install: bundle install
-services:
-  - postgresql
+
+before_install:
+  - "echo 'gem: --no-document' > ~/.gemrc"
+  - "echo '--colour' > ~/.rspec"
+  - export DISPLAY=:99.0
+  - sh -e /etc/init.d/xvfb start
+
+before_script:
+  - bundle exec rake db:create db:migrate RAILS_ENV=test
+
+cache:
+  bundler: true
+  directories:
+    - node_modules
+  yarn: true
+
+install:
+  - bundle install
+  - nvm install node
+  - node -v
+  - npm i -g yarn
+  - yarn
+
 script:
-  - bundle exec rails db:migrate:reset RAILS_ENV=test
+  - bundle exec rails webpacker:compile
   - bundle exec rails spec
   
