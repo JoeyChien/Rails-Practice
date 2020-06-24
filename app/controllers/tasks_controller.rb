@@ -13,9 +13,9 @@ class TasksController < ApplicationController
   def create
     @task = Task.new(task_params) 
     if @task.save
-      redirect_to tasks_path, notice: "新增成功"
+      redirect_to tasks_path, notice: I18n.t('message.create_success')
     else
-      render new, notice: "請再檢查資料"
+      render new, notice: I18n.t('error.check_input_data')
     end
   end
 
@@ -24,17 +24,17 @@ class TasksController < ApplicationController
 
   def update
     if @task.update(task_params)
-      redirect_to tasks_path, notice: "修改成功"
+      redirect_to tasks_path, notice: I18n.t('message.update_success')
     else
-      render edit, notice: "請再檢查資料"
+      render edit, notice: I18n.t('error.check_input_data')
     end
   end
 
   def destroy
     if @task.destroy
-      redirect_to tasks_path, notice: "刪除成功"
+      redirect_to tasks_path, notice: I18n.t('message.delete_success')
     else
-      render edit, notice: "請再試一次"
+      render edit, notice: I18n.t('error.try_again')
     end
   end
 
