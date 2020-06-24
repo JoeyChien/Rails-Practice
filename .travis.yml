@@ -3,6 +3,9 @@ language: ruby
 rvm:
  - 2.6.5
 
+services:
+  - postgresql
+
 before_script:
   - bundle exec rake db:create db:migrate RAILS_ENV=test
 
@@ -20,5 +23,5 @@ install:
   - yarn
 
 script:
-  - bundle exec rails webpacker:compile RAILS_ENV=test
+  - RAILS_ENV=test bundle exec rails webpacker:compile
   - bundle exec rails spec
