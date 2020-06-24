@@ -1,0 +1,26 @@
+zh-TW:
+  helpers:
+    submit:
+      create: "新增%{model}"
+      submit: "儲存%{model}"
+      update: "修改%{model}"
+  activerecord:
+    attributes:    
+      task: 
+        title: "任務名稱"
+        content: "任務內容"
+    models:
+      task: "任務"
+  action:
+    create: "新增"
+    edit: "編輯"
+    delete: "刪除"
+  message:
+    create_success: "新增成功"
+    update_success: "修改成功"
+    delete_success: "刪除成功"    
+    are_you_sure_to_dalete: "確認刪除?"
+  error: 
+    check_input_data: "請再檢查資料"
+    try_again: "請再試一次"
+
