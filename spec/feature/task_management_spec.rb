@@ -1,6 +1,24 @@
 require "rails_helper"
 
 RSpec.feature "Task management" do
+  scenario "Task list order by created time" do
+    old_task = Task.create(title: "My old title", content: "My old conetent")
+    new_task = Task.create(title: "My new title", content: "My new conetent")
+    visit tasks_path    
+
+    within "thead tr:nth-child(1)" do
+      expect(page).to have_text("#{I18n.t('activerecord.attributes.task.title')} #{I18n.t('activerecord.attributes.task.content')} #{I18n.t('action.edit')} #{I18n.t('action.delete')}")
+    end
+    
+    within "tbody tr:nth-child(1)" do
+      expect(page).to have_text("#{new_task.title} #{new_task.content} #{I18n.t('action.edit')} #{I18n.t('action.delete')}")
+    end
+
+    within "tbody tr:nth-child(2)" do
+      expect(page).to have_text("#{old_task.title} #{old_task.content} #{I18n.t('action.edit')} #{I18n.t('action.delete')}")
+    end
+  end 
+
   scenario "User create a new task" do
     visit new_task_path
 
