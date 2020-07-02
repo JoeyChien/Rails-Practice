@@ -2,8 +2,8 @@ require "rails_helper"
 
 RSpec.feature "Task management" do
   scenario "Task list order by created time" do
-    old_task = Task.create(title: "My old title", content: "My old conetent")
-    new_task = Task.create(title: "My new title", content: "My new conetent")
+    old_task = FactoryBot.create(:task,created_at: "2020-07-01 12:27:00")
+    new_task = FactoryBot.create(:task,created_at: "2020-07-02 12:27:00")
     visit tasks_path    
 
     within "thead tr:nth-child(1)" do
