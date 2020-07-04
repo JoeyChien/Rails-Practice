@@ -1,6 +1,6 @@
 FactoryBot.define do
   factory :task do
     title { Faker::Book.title }
-    content { Faker::Books::Lovecraft.sentences }
+    content { Faker::Books::Lovecraft.sentence }
   end
 end
