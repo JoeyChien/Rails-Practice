@@ -1,24 +1,26 @@
 require "rails_helper"
 
-RSpec.feature "Task management" do
-  scenario "Task list order by created time" do
-    old_task = create(:task,created_at: "2020-07-01 12:27:00")
-    new_task = create(:task,created_at: "2020-07-02 12:27:00")
+RSpec.feature "Task list order by created time" do
+  let(:old_task) { create(:task, created_at: "2020-07-01 12:27:00") }
+  let(:new_task) { create(:task, created_at: "2020-07-02 12:27:00") }
+
+  before do
+    old_task
+    new_task
+  end
+
+  scenario "should order by time desc" do
     visit tasks_path    
 
     within "thead tr:nth-child(1)" do
       expect(page).to have_text("#{I18n.t('activerecord.attributes.task.title')} #{I18n.t('activerecord.attributes.task.content')} #{I18n.t('action.edit')} #{I18n.t('action.delete')}")
     end
-    
-    within "tbody tr:nth-child(1)" do
-      expect(page).to have_text("#{new_task.title} #{new_task.content} #{I18n.t('action.edit')} #{I18n.t('action.delete')}")
-    end
-
-    within "tbody tr:nth-child(2)" do
-      expect(page).to have_text("#{old_task.title} #{old_task.content} #{I18n.t('action.edit')} #{I18n.t('action.delete')}")
-    end
+    expect_position_is(1, new_task)
+    expect_position_is(2, old_task)
   end 
+end
 
+RSpec.feature "Task management" do  
   scenario "User create a new task" do
     visit new_task_path
 
@@ -50,11 +52,17 @@ RSpec.feature "Task management" do
 
   scenario "User delete a task" do
     task = Task.create(title: "My title", content: "My conetent")
-    visit tasks_path(task)
+    visit tasks_path
 
     click_link I18n.t('action.delete')
 
     expect(page).to have_text(I18n.t('message.delete_success'))
     expect{Task.find(task.id)}.to raise_exception(ActiveRecord::RecordNotFound)
+  end
+end
+
+def expect_position_is(position, task)
+  within "tbody tr:nth-child(#{position})" do
+    expect(page).to have_text("#{task.title} #{task.content} #{I18n.t('action.edit')} #{I18n.t('action.delete')}")
   end
 end
