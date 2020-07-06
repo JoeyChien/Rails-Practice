@@ -3,7 +3,7 @@ class TasksController < ApplicationController
 
   def index
     # 之後加上分頁功能
-    @tasks = Task.all
+    @tasks = Task.all.order(created_at: :desc)
   end
 
   def new
