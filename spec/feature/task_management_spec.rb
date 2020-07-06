@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.feature "Task list order by created time" do
+RSpec.feature "Task management" do
   let(:old_task) { create(:task, created_at: "2020-07-01 12:27:00") }
   let(:new_task) { create(:task, created_at: "2020-07-02 12:27:00") }
 
@@ -9,7 +9,7 @@ RSpec.feature "Task list order by created time" do
     new_task
   end
 
-  scenario "should order by time desc" do
+  it "should order by time desc" do
     visit tasks_path    
 
     within "thead tr:nth-child(1)" do
@@ -18,10 +18,8 @@ RSpec.feature "Task list order by created time" do
     expect_position_is(1, new_task)
     expect_position_is(2, old_task)
   end 
-end
 
-RSpec.feature "Task management" do  
-  scenario "User create a new task" do
+  it "User create a new task" do
     visit new_task_path
 
     fill_in I18n.t('activerecord.attributes.task.title'), with: "My title"
@@ -35,7 +33,7 @@ RSpec.feature "Task management" do
     expect(task_last.content).to eq ("My content")
   end
 
-  scenario "User edit a task" do
+  it "User edit a task" do
     task = Task.create(title: "My title", content: "My conetent")
     visit edit_task_path(task)
 
@@ -50,19 +48,21 @@ RSpec.feature "Task management" do
     expect(updated_task.content).to eq ("Edit my content")
   end
 
-  scenario "User delete a task" do
+  it "User delete a task" do
     task = Task.create(title: "My title", content: "My conetent")
     visit tasks_path
 
-    click_link I18n.t('action.delete')
+    click_link(I18n.t('action.delete'), href: task_path(task))
 
     expect(page).to have_text(I18n.t('message.delete_success'))
     expect{Task.find(task.id)}.to raise_exception(ActiveRecord::RecordNotFound)
   end
-end
 
-def expect_position_is(position, task)
-  within "tbody tr:nth-child(#{position})" do
-    expect(page).to have_text("#{task.title} #{task.content} #{I18n.t('action.edit')} #{I18n.t('action.delete')}")
+  private
+  
+  def expect_position_is(position, task)
+    within "tbody tr:nth-child(#{position})" do
+      expect(page).to have_text("#{task.title} #{task.content} #{I18n.t('action.edit')} #{I18n.t('action.delete')}")
+    end
   end
 end
