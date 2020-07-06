@@ -3,13 +3,14 @@ require "rails_helper"
 RSpec.feature "Task management" do
   let(:old_task) { create(:task, created_at: "2020-07-01 12:27:00") }
   let(:new_task) { create(:task, created_at: "2020-07-02 12:27:00") }
-
+  
   before do
+    authenticate
     old_task
     new_task
   end
 
-  it "should order by time desc" do
+  it "should order by time desc" do    
     visit tasks_path    
 
     within "thead tr:nth-child(1)" do
@@ -64,5 +65,13 @@ RSpec.feature "Task management" do
     within "tbody tr:nth-child(#{position})" do
       expect(page).to have_text("#{task.title} #{task.content} #{I18n.t('action.edit')} #{I18n.t('action.delete')}")
     end
+  end
+
+  def authenticate
+    if page.driver.browser.respond_to?(:authorize)
+      page.driver.browser.authorize(ENV["basic_name"], ENV["basic_pw"])
+    else      
+      visit tasks_path
+     end
   end
 end
