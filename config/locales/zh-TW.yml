@@ -15,6 +15,12 @@ zh-TW:
         content: "任務內容"
     models:
       task: "任務"
+    errors:
+      models:
+        task:
+          attributes:
+            title:
+              blank: "不可為空"
   action:
     create: "新增"
     edit: "編輯"

@@ -15,7 +15,7 @@ class TasksController < ApplicationController
     if @task.save
       redirect_to tasks_path, notice: I18n.t('message.create_success')
     else
-      render new, notice: I18n.t('error.check_input_data')
+      render :new
     end
   end
 
@@ -26,7 +26,7 @@ class TasksController < ApplicationController
     if @task.update(task_params)
       redirect_to tasks_path, notice: I18n.t('message.update_success')
     else
-      render edit, notice: I18n.t('error.check_input_data')
+      render :edit
     end
   end
 
@@ -34,7 +34,7 @@ class TasksController < ApplicationController
     if @task.destroy
       redirect_to tasks_path, notice: I18n.t('message.delete_success')
     else
-      render edit, notice: I18n.t('error.try_again')
+      render :edit
     end
   end
 

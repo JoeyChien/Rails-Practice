@@ -1,4 +1,11 @@
 <%= form_for(task) do |f| %>
+  <% if task.errors.any? %>
+    <ul>
+      <% task.errors.full_messages.each do |message| %>
+      <li><%= message  %></li>
+      <% end %>
+    </ul>                  
+  <% end %>
   <%= f.label :title, t('activerecord.attributes.task.title') %>
   <%= f.text_field :title %>
   <%= f.label :content, t('activerecord.attributes.task.content') %>
