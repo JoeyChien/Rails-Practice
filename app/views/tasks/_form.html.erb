@@ -10,5 +10,7 @@
   <%= f.text_field :title %>
   <%= f.label :content, t('activerecord.attributes.task.content') %>
   <%= f.text_field :content %>
+  <%= f.label :end_time, t('activerecord.attributes.task.end_time') %>
+  <%= f.datetime_field :end_time %>
   <%= f.submit %>
 <% end %>
