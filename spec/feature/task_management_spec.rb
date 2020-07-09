@@ -3,13 +3,13 @@ require "rails_helper"
 RSpec.feature "Task management" do
   let(:old_task) { create(:task, created_at: "2020-07-01 12:27:00") }
   let(:new_task) { create(:task, created_at: "2020-07-02 12:27:00") }
-
+  
   before do
     old_task
     new_task
   end
 
-  it "should order by time desc" do
+  scenario "should order by time desc" do    
     visit tasks_path    
 
     within "thead tr:nth-child(1)" do
@@ -19,7 +19,7 @@ RSpec.feature "Task management" do
     expect_position_is(2, old_task)
   end 
 
-  it "User create a new task" do
+  scenario "User create a new task" do
     visit new_task_path
 
     fill_in I18n.t('activerecord.attributes.task.title'), with: "My title"
@@ -33,7 +33,7 @@ RSpec.feature "Task management" do
     expect(task_last.content).to eq ("My content")
   end
 
-  it "User edit a task" do
+  scenario "User edit a task" do
     task = Task.create(title: "My title", content: "My conetent")
     visit edit_task_path(task)
 
@@ -48,7 +48,7 @@ RSpec.feature "Task management" do
     expect(updated_task.content).to eq ("Edit my content")
   end
 
-  it "User delete a task" do
+  scenario "User delete a task" do
     task = Task.create(title: "My title", content: "My conetent")
     visit tasks_path
 
