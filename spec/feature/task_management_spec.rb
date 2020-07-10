@@ -13,10 +13,23 @@ RSpec.feature "Task management" do
     visit tasks_path    
 
     within "thead tr:nth-child(1)" do
-      expect(page).to have_text("#{I18n.t('activerecord.attributes.task.title')} #{I18n.t('activerecord.attributes.task.content')} #{I18n.t('action.edit')} #{I18n.t('action.delete')}")
+      expect(page).to have_text("#{I18n.t('activerecord.attributes.task.title')} #{I18n.t('activerecord.attributes.task.content')} #{I18n.t('activerecord.attributes.task.end_time')} #{I18n.t('action.edit')} #{I18n.t('action.delete')}")
     end
-    expect_position_is(1, new_task)
-    expect_position_is(2, old_task)
+    
+    expect_order('title', new_task.title, old_task.title)
+    expect_order('content', new_task.content, old_task.content)
+  end 
+
+  scenario "click sort by end time should order by end time asc" do     
+    new_task.end_time = "2020-07-12 12:27:00" 
+    old_task.end_time = "2020-07-10 12:27:00"
+
+    visit tasks_path    
+
+    click_link I18n.t('activerecord.attributes.task.end_time')
+    
+    expect_order('title', old_task.title, new_task.title)
+    expect_order('content', old_task.content, new_task.content)
   end 
 
   scenario "User create a new task" do
@@ -60,9 +73,11 @@ RSpec.feature "Task management" do
 
   private
   
-  def expect_position_is(position, task)
-    within "tbody tr:nth-child(#{position})" do
-      expect(page).to have_text("#{task.title} #{task.content} #{I18n.t('action.edit')} #{I18n.t('action.delete')}")
+  def expect_order(column, fisrt_task, second_task)
+    @tasks = []
+    page.all(".task-#{column}").each do | element |
+      @tasks << element.text
     end
+    expect(@tasks).to eq [fisrt_task, second_task]
   end
 end
