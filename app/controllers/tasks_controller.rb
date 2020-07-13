@@ -3,8 +3,7 @@ class TasksController < ApplicationController
 
   def index
     # 之後加上分頁功能
-    @tasks = Task.order(sort_by + " " + 'desc')
-    
+    @tasks = Task.order(sort_by + ' ' + direction)    
   end
 
   def new
@@ -50,5 +49,9 @@ class TasksController < ApplicationController
   
   def sort_by
     %w{end_time created_at}.include?(params[:sort_by]) ? params[:sort_by] : 'created_at'
+  end
+
+  def direction
+    %w{desc asc}.include?(params[:direction]) ? params[:direction] : 'desc'
   end
 end
