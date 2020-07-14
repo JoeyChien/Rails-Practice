@@ -8,6 +8,7 @@ RSpec.configure do |config|
   end
 
   config.before(:each) do
+    DatabaseCleaner.clean
     DatabaseCleaner.start
   end
 

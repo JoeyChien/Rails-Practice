@@ -1,68 +1,91 @@
 require "rails_helper"
 
-RSpec.feature "Task management" do
-  let(:old_task) { create(:task, created_at: "2020-07-01 12:27:00") }
-  let(:new_task) { create(:task, created_at: "2020-07-02 12:27:00") }
-  
-  before do
-    old_task
-    new_task
-  end
+RSpec.feature 'Task management' do
+  feature 'Task order' do
+    context 'should order by time desc' do
+      let(:old_task) { create(:task, created_at: "2020-07-01 12:27:00") }
+      let(:new_task) { create(:task, created_at: "2020-07-02 12:27:00") }
 
-  scenario "should order by time desc" do    
-    visit tasks_path    
+      before do
+        old_task
+        new_task
+      end
 
-    within "thead tr:nth-child(1)" do
-      expect(page).to have_text("#{I18n.t('activerecord.attributes.task.title')} #{I18n.t('activerecord.attributes.task.content')} #{I18n.t('action.edit')} #{I18n.t('action.delete')}")
+      scenario 'when by time asc' do
+        visit tasks_path
+
+        expect_order('title', new_task.title, old_task.title)
+        expect_order('content', new_task.content, old_task.content)
+      end
     end
-    expect_position_is(1, new_task)
-    expect_position_is(2, old_task)
-  end 
+    context 'click sort by end time' do
+      let(:earlier_end_task) { create(:task, end_time: "2020-07-10 12:27:00") }
+      let(:later_end_task) { create(:task, end_time: "2020-07-12 12:27:00") }
 
-  scenario "User create a new task" do
-    visit new_task_path
+      before do
+        earlier_end_task
+        later_end_task
+      end
 
-    fill_in I18n.t('activerecord.attributes.task.title'), with: "My title"
-    fill_in I18n.t('activerecord.attributes.task.content'), with: "My content"
-    click_button I18n.t('helpers.submit.task.create')
-
-    task_last = Task.last
+      scenario "should order by end time asc" do 
+        visit tasks_path    
     
-    expect(page).to have_text(I18n.t('message.create_success'))
-    expect(task_last.title).to eq ("My title") 
-    expect(task_last.content).to eq ("My content")
+        click_link I18n.t('activerecord.attributes.task.end_time')
+        
+        expect_order('title', earlier_end_task.title, later_end_task.title)
+        expect_order('content', earlier_end_task.content, later_end_task.content)
+      end 
+    end   
   end
 
-  scenario "User edit a task" do
-    task = Task.create(title: "My title", content: "My conetent")
-    visit edit_task_path(task)
-
-    fill_in I18n.t('activerecord.attributes.task.title'), with: "Edit my title"
-    fill_in I18n.t('activerecord.attributes.task.content'), with: "Edit my content"
-    click_button I18n.t('helpers.submit.task.update')
-    
-    updated_task = Task.find(task.id)
-
-    expect(page).to have_text(I18n.t('message.update_success'))
-    expect(updated_task.title).to eq ("Edit my title")
-    expect(updated_task.content).to eq ("Edit my content")
-  end
-
-  scenario "User delete a task" do
-    task = Task.create(title: "My title", content: "My conetent")
-    visit tasks_path
-
-    click_link(I18n.t('action.delete'), href: task_path(task))
-
-    expect(page).to have_text(I18n.t('message.delete_success'))
-    expect{Task.find(task.id)}.to raise_exception(ActiveRecord::RecordNotFound)
+  feature 'Task CRUD ' do
+    scenario "User create a new task" do
+      visit new_task_path
+  
+      fill_in I18n.t('activerecord.attributes.task.title'), with: "My title"
+      fill_in I18n.t('activerecord.attributes.task.content'), with: "My content"
+      click_button I18n.t('helpers.submit.task.create')
+  
+      task_last = Task.last
+      
+      expect(page).to have_text(I18n.t('message.create_success'))
+      expect(task_last.title).to eq ("My title") 
+      expect(task_last.content).to eq ("My content")
+    end
+  
+    scenario "User edit a task" do
+      task = Task.create(title: "My title", content: "My conetent")
+      visit edit_task_path(task)
+  
+      fill_in I18n.t('activerecord.attributes.task.title'), with: "Edit my title"
+      fill_in I18n.t('activerecord.attributes.task.content'), with: "Edit my content"
+      click_button I18n.t('helpers.submit.task.update')
+      
+      updated_task = Task.find(task.id)
+  
+      expect(page).to have_text(I18n.t('message.update_success'))
+      expect(updated_task.title).to eq ("Edit my title")
+      expect(updated_task.content).to eq ("Edit my content")
+    end
+  
+    scenario "User delete a task" do
+      task = Task.create(title: "My title", content: "My conetent")
+      visit tasks_path
+  
+      click_link(I18n.t('action.delete'), href: task_path(task))
+  
+      expect(page).to have_text(I18n.t('message.delete_success'))
+      expect{Task.find(task.id)}.to raise_exception(ActiveRecord::RecordNotFound)
+    end
   end
 
   private
   
-  def expect_position_is(position, task)
-    within "tbody tr:nth-child(#{position})" do
-      expect(page).to have_text("#{task.title} #{task.content} #{I18n.t('action.edit')} #{I18n.t('action.delete')}")
+  def expect_order(column, fisrt_task, second_task)
+    @tasks = []
+    page.all(".task-#{column}").each do | element |
+      @tasks << element.text
     end
+    expect(@tasks).to eq [fisrt_task, second_task]
   end
 end
