@@ -3,7 +3,7 @@ class TasksController < ApplicationController
 
   def index
     # 之後加上分頁功能
-    @tasks = Task.order(sort_by + ' ' + direction)    
+    @tasks = Task.order("#{sort_by} #{direction}")    
   end
 
   def new
