@@ -6,6 +6,7 @@
 <table border="1">
   <thead>
     <tr>
+      <th><%= t('activerecord.attributes.task.status') %></th>
       <th><%= t('activerecord.attributes.task.title') %></th>
       <th><%= t('activerecord.attributes.task.content') %></th>
       <th><%= t('activerecord.attributes.task.end_time') %></th>
@@ -17,6 +18,7 @@
   <tbody>  
     <% @tasks.each do |task| %>
       <tr>
+        <td><%= t("activerecord.attributes.task.statuses.#{task.status}") %></td>
         <td class='task-title'><%= task.title %></td>
         <td class='task-content'><%= task.content %></td>
         <td><%= task.end_time %></td>

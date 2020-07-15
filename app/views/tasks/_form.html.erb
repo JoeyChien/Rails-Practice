@@ -8,9 +8,16 @@
   <% end %>
   <%= f.label :title, t('activerecord.attributes.task.title') %>
   <%= f.text_field :title %>
+  </br>
   <%= f.label :content, t('activerecord.attributes.task.content') %>
   <%= f.text_field :content %>
+  </br>
   <%= f.label :end_time, t('activerecord.attributes.task.end_time') %>
   <%= f.datetime_field :end_time %>
+  </br>
+  <% Task.statuses.keys.each do |status| %>
+    <%= f.radio_button :status, status %>
+    <%= f.label t("activerecord.attributes.task.statuses.#{status}") %>
+  <% end %>
   <%= f.submit %>
 <% end %>
