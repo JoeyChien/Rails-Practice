@@ -15,6 +15,11 @@ zh-TW:
         content: "任務內容"
         end_time: "結束時間"
         created_at: "建立時間"
+        status: "狀態"
+        statuses:
+          pending: "待處理"
+          inprogress: "進行中"
+          completed: "完成"
     models:
       task: "任務"
     errors:
