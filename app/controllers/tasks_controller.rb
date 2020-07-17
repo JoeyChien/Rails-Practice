@@ -3,7 +3,11 @@ class TasksController < ApplicationController
 
   def index
     # 之後加上分頁功能
-    @tasks = Task.order("#{sort_by} #{direction}")    
+    keyword = params[:keyword]
+    @tasks = Task.order("#{sort_by} #{direction}").where("title ILIKE ?", "%#{keyword}%")
+    if params[:status] && params[:status] != ""
+      @tasks = @tasks.where(status: params[:status])
+    end
   end
 
   def new
