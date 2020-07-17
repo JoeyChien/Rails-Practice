@@ -1,5 +1,6 @@
 zh-TW:
   helpers:
+    search: "搜尋"
     submit:
       create: "新增%{model}"
       submit: "儲存%{model}"
@@ -16,10 +17,6 @@ zh-TW:
         end_time: "結束時間"
         created_at: "建立時間"
         status: "狀態"
-        statuses:
-          pending: "待處理"
-          inprogress: "進行中"
-          completed: "完成"
     models:
       task: "任務"
     errors:
@@ -28,6 +25,12 @@ zh-TW:
           attributes:
             title:
               blank: "不可為空"
+  enums:    
+    task:            
+      statuses:
+        pending: "待處理"
+        inprogress: "進行中"
+        completed: "完成"
   action:
     create: "新增"
     edit: "編輯"
