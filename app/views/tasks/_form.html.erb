@@ -17,7 +17,7 @@
   </br>
   <% Task.statuses.keys.each do |status| %>
     <%= f.radio_button :status, status %>
-    <%= f.label t("activerecord.attributes.task.statuses.#{status}") %>
+    <%= f.label t("enums.task.statuses.#{status}") %>
   <% end %>
   <%= f.submit %>
 <% end %>
