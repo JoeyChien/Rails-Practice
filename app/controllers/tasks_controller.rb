@@ -3,7 +3,6 @@ class TasksController < ApplicationController
 
   def index
     # 之後加上分頁功能
-    keyword = params[:keyword]
     @tasks = Task.order("#{sort_by} #{direction}")
     @tasks = @tasks.filter_by_status(params[:status]) if params[:status].present?
     @tasks = @tasks.query_by_title(params[:keyword]) if params[:keyword].present?
