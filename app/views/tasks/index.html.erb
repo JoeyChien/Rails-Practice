@@ -6,7 +6,7 @@
 <p>
   <%= form_tag(tasks_path, method: :get) do %>
     <%= select_tag :status, options_for_select(Task.statuses.map { |key, value| [t("enums.task.statuses.#{key}"), value] }), prompt: t('activerecord.attributes.task.status') %>
-    <%= text_field_tag(:keyword, params[:keyword]) %>
+    <%= text_field_tag(:keyword, params[:keyword], class: "query-title") %>
     <%= submit_tag t('helpers.search') %>
   <% end %>
 </p>
