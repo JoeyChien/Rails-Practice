@@ -81,8 +81,8 @@ RSpec.feature 'Task management' do
 
   feature 'Task search' do
     context 'Search by title & status' do
-      let(:inprogress_task) { create(:task, title: "My inprogress task", status: 1) }
-      let(:pending_task) { create(:task, title: "My pending task", status: 0) }
+      let(:inprogress_task) { create(:task, title: "My inprogress task", status: 'inprogress') }
+      let(:pending_task) { create(:task, title: "My pending task", status: 'pending') }
 
       before do
         inprogress_task
