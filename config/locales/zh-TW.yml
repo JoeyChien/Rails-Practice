@@ -17,6 +17,7 @@ zh-TW:
         end_time: "結束時間"
         created_at: "建立時間"
         status: "狀態"
+        priority: "優先度"
     models:
       task: "任務"
     errors:
@@ -31,6 +32,10 @@ zh-TW:
         pending: "待處理"
         inprogress: "進行中"
         completed: "完成"
+      priorities:
+        low: "低"
+        medium: "中"
+        high: "高"
   action:
     create: "新增"
     edit: "編輯"
