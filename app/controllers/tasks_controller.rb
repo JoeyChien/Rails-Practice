@@ -40,7 +40,7 @@ class TasksController < ApplicationController
 
   private
   def task_params
-    params.require(:task).permit(:title, :content, :end_time, :status)
+    params.require(:task).permit(:title, :content, :end_time, :status, :priority)
   end
 
   def find_task
@@ -48,7 +48,7 @@ class TasksController < ApplicationController
   end
   
   def sort_by
-    %w{end_time created_at}.include?(params[:sort_by]) ? params[:sort_by] : 'created_at'
+    %w{end_time created_at priority}.include?(params[:sort_by]) ? params[:sort_by] : 'created_at'
   end
 
   def direction

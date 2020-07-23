@@ -17,7 +17,13 @@
   </br>
   <% Task.statuses.keys.each do |status| %>
     <%= f.radio_button :status, status %>
-    <%= f.label t("enums.task.statuses.#{status}") %>
+    <%= f.label :status, t("enums.task.statuses.#{status}"), for: "task_status_#{status}" %>
   <% end %>
+  </br>
+  <% Task.priorities.keys.each do |priority| %>
+    <%= f.radio_button :priority, priority %>
+    <%= f.label :priority, t("enums.task.priorities.#{priority}"), for: "task_priority_#{priority}" %>
+  <% end %>
+  </br>
   <%= f.submit %>
 <% end %>
