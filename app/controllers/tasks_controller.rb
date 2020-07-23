@@ -3,7 +3,7 @@ class TasksController < ApplicationController
 
   def index
     # 之後加上分頁功能
-    @tasks = Task.order("#{sort_by} #{direction}")    
+    list_tasks
   end
 
   def new
@@ -40,7 +40,7 @@ class TasksController < ApplicationController
 
   private
   def task_params
-    params.require(:task).permit(:title, :content, :end_time)
+    params.require(:task).permit(:title, :content, :end_time, :status)
   end
 
   def find_task
@@ -53,5 +53,11 @@ class TasksController < ApplicationController
 
   def direction
     %w{desc asc}.include?(params[:direction]) ? params[:direction] : 'desc'
+  end
+
+  def list_tasks
+    @tasks = Task.order("#{sort_by} #{direction}")
+    @tasks = @tasks.filter_by_status(params[:status]) if params[:status].present?
+    @tasks = @tasks.query_by_title(params[:keyword]) if params[:keyword].present?
   end
 end

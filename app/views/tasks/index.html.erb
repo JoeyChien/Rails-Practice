@@ -3,9 +3,17 @@
   <%= link_to t('activerecord.attributes.task.end_time'), tasks_path(sort_by: 'end_time', direction: 'asc') %>
   <%= link_to t('activerecord.attributes.task.created_at'), tasks_path(sort_by: 'created_at', direction: 'desc') %>
 </p>
+<p>
+  <%= form_tag(tasks_path, method: :get) do %>
+    <%= select_tag :status, options_for_select(Task.statuses.map { |key, value| [t("enums.task.statuses.#{key}"), key] }), prompt: t('activerecord.attributes.task.status') %>
+    <%= text_field_tag(:keyword, params[:keyword], class: "query-title") %>
+    <%= submit_tag t('helpers.search') %>
+  <% end %>
+</p>
 <table border="1">
   <thead>
     <tr>
+      <th><%= t('activerecord.attributes.task.status') %></th>
       <th><%= t('activerecord.attributes.task.title') %></th>
       <th><%= t('activerecord.attributes.task.content') %></th>
       <th><%= t('activerecord.attributes.task.end_time') %></th>
@@ -17,6 +25,7 @@
   <tbody>  
     <% @tasks.each do |task| %>
       <tr>
+        <td><%= t("enums.task.statuses.#{task.status}") %></td>
         <td class='task-title'><%= task.title %></td>
         <td class='task-content'><%= task.content %></td>
         <td><%= task.end_time %></td>
