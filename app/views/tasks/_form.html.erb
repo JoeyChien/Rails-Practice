@@ -8,16 +8,22 @@
   <% end %>
   <%= f.label :title, t('activerecord.attributes.task.title') %>
   <%= f.text_field :title %>
-  </br>
+  <br>
   <%= f.label :content, t('activerecord.attributes.task.content') %>
   <%= f.text_field :content %>
-  </br>
+  <br>
   <%= f.label :end_time, t('activerecord.attributes.task.end_time') %>
   <%= f.datetime_field :end_time %>
-  </br>
+  <br>
   <% Task.statuses.keys.each do |status| %>
     <%= f.radio_button :status, status %>
-    <%= f.label t("enums.task.statuses.#{status}") %>
+    <%= f.label :status, t("enums.task.statuses.#{status}"), for: "task_status_#{status}" %>
   <% end %>
+  <br>
+  <% Task.priorities.keys.each do |priority| %>
+    <%= f.radio_button :priority, priority %>
+    <%= f.label :priority, t("enums.task.priorities.#{priority}"), for: "task_priority_#{priority}" %>
+  <% end %>
+  <br>
   <%= f.submit %>
 <% end %>
