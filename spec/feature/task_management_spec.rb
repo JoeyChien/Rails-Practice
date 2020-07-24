@@ -35,6 +35,24 @@ RSpec.feature 'Task management' do
         expect_order('title', earlier_end_task.title, later_end_task.title)
         expect_order('content', earlier_end_task.content, later_end_task.content)
       end 
+    end  
+    context 'click sort by priority' do
+      let(:high_task) { create(:task, priority: 'high') }
+      let(:medium_task) { create(:task, priority: 'medium') }
+
+      before do
+        high_task
+        medium_task
+      end
+
+      scenario "should order by priority desc" do 
+        visit tasks_path    
+    
+        click_link I18n.t('activerecord.attributes.task.priority')
+        
+        expect_order('title', high_task.title, medium_task.title)
+        expect_order('content', high_task.content, medium_task.content)
+      end 
     end   
   end
 
