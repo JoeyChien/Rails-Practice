@@ -59,5 +59,6 @@ class TasksController < ApplicationController
     @tasks = Task.order("#{sort_by} #{direction}")
     @tasks = @tasks.filter_by_status(params[:status]) if params[:status].present?
     @tasks = @tasks.query_by_title(params[:keyword]) if params[:keyword].present?
+    @tasks = @tasks.page(params[:page])
   end
 end
