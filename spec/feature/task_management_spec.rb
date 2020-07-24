@@ -18,6 +18,7 @@ RSpec.feature 'Task management' do
         expect_order('content', new_task.content, old_task.content)
       end
     end
+
     context 'click sort by end time' do
       let(:earlier_end_task) { create(:task, end_time: "2020-07-10 12:27:00") }
       let(:later_end_task) { create(:task, end_time: "2020-07-12 12:27:00") }
@@ -36,6 +37,7 @@ RSpec.feature 'Task management' do
         expect_order('content', earlier_end_task.content, later_end_task.content)
       end 
     end  
+    
     context 'click sort by priority' do
       let(:high_task) { create(:task, priority: 'high') }
       let(:medium_task) { create(:task, priority: 'medium') }

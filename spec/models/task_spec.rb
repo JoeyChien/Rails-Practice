@@ -7,7 +7,7 @@ RSpec.describe Task, type: :model do
     task
   end
 
-  it "it contain title & content & status & priority" do
+  it "contain title & content & status & priority" do
     expect(task.title).to be_present
     expect(task.content).to be_present
     expect(task.status).to be_present
