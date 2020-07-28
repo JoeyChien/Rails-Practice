@@ -17,9 +17,13 @@ footer {
 position: absolute;
 bottom: 0;
 width: 100%;
-background-color: #ccafaf;
+background-color: ghostwhite;
 }
 table{
+  box-shadow: 0 2px 5px 0 rgba(0,0,0,0.16), 0 2px 10px 0 rgba(0,0,0,0.12);
+}
+.btn{
+  border-radius: 0 !important;
   box-shadow: 0 2px 5px 0 rgba(0,0,0,0.16), 0 2px 10px 0 rgba(0,0,0,0.12);
 }
 .thead-red{
@@ -30,16 +34,27 @@ table{
 .table-striped>tbody>tr:nth-child(odd)>th {
   background-color: #F0DFE5; 
 }
+.btn-purple{
+  background-color: #848ccf; 
+  color: ghostwhite;
+}
 .btn-circle{
   border-radius: 50%;
   margin-right: 2px;
   margin-left: 2px;
   padding: 2px 9px;
+  box-shadow: 0 2px 5px 0 rgba(0,0,0,0.16), 0 2px 10px 0 rgba(0,0,0,0.12);
 }
 .btn-blue{
-  background-color: #93b5e1; 
+  background-color: #848ccf; 
   color: ghostwhite;
 }
-span.page{
-  
+li.btn-page{
+  margin: 0px 4px;
+  font-weight: bold;
+}
+li.btn-page>a{
+  text-decoration: none;  
+  color: #848ccf;
+  font-weight: bold;
 }
