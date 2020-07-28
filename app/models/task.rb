@@ -1,4 +1,5 @@
 class Task < ApplicationRecord
+  paginates_per 10
   validates :title, presence: true
   enum status: [ :pending, :inprogress, :completed ]
   enum priority: [ :low, :medium, :high ]
