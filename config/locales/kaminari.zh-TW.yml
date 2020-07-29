@@ -10,8 +10,8 @@ zh-TW:
           zero: "找不到 %{entry_name}"
   views:
     pagination:
-      first: "&laquo; 第一頁"
-      last: "最後一頁 &raquo;"
-      next: "下一頁 &rsaquo;"
-      previous: "&lsaquo; 上一頁"
+      first: " &laquo; "
+      last: " &raquo; "
+      next: " &rsaquo; "
+      previous: " &lsaquo; "
       truncate: "&hellip;"
