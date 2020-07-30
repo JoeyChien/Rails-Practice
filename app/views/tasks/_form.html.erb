@@ -1,29 +1,31 @@
-<%= form_for(task) do |f| %>
-  <% if task.errors.any? %>
-    <ul>
-      <% task.errors.full_messages.each do |message| %>
-      <li><%= message  %></li>
-      <% end %>
-    </ul>                  
+<div class="col-md-8 mx-auto">
+  <%= form_for(task) do |f| %>
+    <% if task.errors.any? %>
+      <ul>
+        <% task.errors.full_messages.each do |message| %>
+        <li><%= message  %></li>
+        <% end %>
+      </ul>                  
+    <% end %>
+    <%= f.label :title, t('activerecord.attributes.task.title') %>
+    <%= f.text_field :title, class: "form-control" %>
+    <br>
+    <%= f.label :content, t('activerecord.attributes.task.content') %>
+    <%= f.text_field :content, class: "form-control" %>
+    <br>
+    <%= f.label :end_time, t('activerecord.attributes.task.end_time') %>
+    <%= f.datetime_field :end_time, class: "form-control" %>
+    <br>
+    <% Task.statuses.keys.each do |status| %>
+      <%= f.radio_button :status, status %>
+      <%= f.label :status, t("enums.task.statuses.#{status}"), for: "task_status_#{status}" %>
+    <% end %>
+    <br>
+    <% Task.priorities.keys.each do |priority| %>
+      <%= f.radio_button :priority, priority %>
+      <%= f.label :priority, t("enums.task.priorities.#{priority}"), for: "task_priority_#{priority}" %>
+    <% end %>
+    <br>
+    <%= f.submit class: "btn btn-purple" %>
   <% end %>
-  <%= f.label :title, t('activerecord.attributes.task.title') %>
-  <%= f.text_field :title %>
-  <br>
-  <%= f.label :content, t('activerecord.attributes.task.content') %>
-  <%= f.text_field :content %>
-  <br>
-  <%= f.label :end_time, t('activerecord.attributes.task.end_time') %>
-  <%= f.datetime_field :end_time %>
-  <br>
-  <% Task.statuses.keys.each do |status| %>
-    <%= f.radio_button :status, status %>
-    <%= f.label :status, t("enums.task.statuses.#{status}"), for: "task_status_#{status}" %>
-  <% end %>
-  <br>
-  <% Task.priorities.keys.each do |priority| %>
-    <%= f.radio_button :priority, priority %>
-    <%= f.label :priority, t("enums.task.priorities.#{priority}"), for: "task_priority_#{priority}" %>
-  <% end %>
-  <br>
-  <%= f.submit %>
-<% end %>
+</div>
